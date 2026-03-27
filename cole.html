@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cole</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:wght@300;400&display=swap');
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
-        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:wght@300;400&display=swap');
 
         body {
             font-family: 'Cormorant Garamond', 'Georgia', serif;
@@ -55,6 +55,8 @@
             margin-bottom: 20px;
             font-family: 'Cinzel', serif;
             text-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+            cursor: default;
+            user-select: none;
         }
 
         .search-container {
@@ -137,16 +139,6 @@
             letter-spacing: 1px;
         }
 
-
-
-
-
-
-
-
-
-
-
         .iframe-container {
             flex: 1;
             background: #000;
@@ -159,6 +151,7 @@
             height: 100%;
             border: none;
             background: #000;
+            display: block;
         }
 
         .loading-overlay {
@@ -167,11 +160,15 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.8);
-            display: flex;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
             align-items: center;
             justify-content: center;
             z-index: 1000;
+        }
+
+        .loading-overlay.active {
+            display: flex;
         }
 
         .loading-spinner {
@@ -188,12 +185,6 @@
             100% { transform: rotate(360deg); }
         }
 
-        .hidden {
-            display: none;
-        }
-
-
-
         .home-screen {
             display: flex;
             justify-content: center;
@@ -201,6 +192,10 @@
             height: 100%;
             flex-direction: column;
             background: transparent;
+        }
+
+        .home-screen.hidden {
+            display: none;
         }
 
         .home-screen h1 {
@@ -218,12 +213,16 @@
             letter-spacing: 3px;
             font-style: italic;
         }
+
+        .browser-frame.hidden {
+            display: none;
+        }
     </style>
 </head>
 <body>
     <div class="browser-container">
         <div class="header">
-            <div class="title">C O L E</div>
+            <div class="title" id="titleElement">C O L E</div>
             <div class="search-container">
                 <input type="text" 
                        class="search-input" 
@@ -239,7 +238,7 @@
         </div>
 
         <div class="iframe-container">
-            <div class="loading-overlay hidden" id="loadingOverlay">
+            <div class="loading-overlay" id="loadingOverlay">
                 <div class="loading-spinner"></div>
             </div>
             <div class="home-screen" id="homeScreen">
@@ -248,24 +247,20 @@
             </div>
             <iframe class="browser-frame hidden" 
                     id="browserFrame"
-                    sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-modals allow-popups-to-escape-sandbox"
-                    src="about:blank">
+                    sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-modals allow-popups-to-escape-sandbox allow-top-navigation"
+                    allowfullscreen>
             </iframe>
         </div>
     </div>
 
     <script>
-        // Inline minimal proxy handler
-        const USE_DIRECT = true; // Load sites directly
         const searchInput = document.getElementById('searchInput');
         const searchBtn = document.getElementById('searchBtn');
         const browserFrame = document.getElementById('browserFrame');
         const homeScreen = document.getElementById('homeScreen');
         const urlDisplay = document.getElementById('urlDisplay');
         const loadingOverlay = document.getElementById('loadingOverlay');
-
-        let history = [];
-        let currentIndex = -1;
+        const titleElement = document.getElementById('titleElement');
 
         function isValidUrl(string) {
             try {
@@ -277,6 +272,8 @@
         }
 
         function formatUrl(input) {
+            input = input.trim();
+            
             if (isValidUrl(input)) {
                 return input;
             }
@@ -292,63 +289,44 @@
 
         function navigateTo(url) {
             const targetUrl = formatUrl(url);
-            
             console.log('Navigating to:', targetUrl);
             
-            // Add to history
-            if (currentIndex < history.length - 1) {
-                history = history.slice(0, currentIndex + 1);
-            }
-            history.push(targetUrl);
-            currentIndex = history.length - 1;
-
             // Show loading and hide home screen
-            loadingOverlay.classList.remove('hidden');
+            loadingOverlay.classList.add('active');
             homeScreen.classList.add('hidden');
             browserFrame.classList.remove('hidden');
-
-            // Load URL directly
-            setTimeout(() => {
-                browserFrame.src = targetUrl;
-                console.log('iframe src set to:', browserFrame.src);
-            }, 100);
             
-            // Update URL display with cleaner format
+            // Update URL display
             try {
                 const urlObj = new URL(targetUrl);
                 urlDisplay.textContent = urlObj.hostname.replace('www.', '');
             } catch (e) {
                 urlDisplay.textContent = targetUrl;
             }
+
+            // Load URL
+            browserFrame.src = targetUrl;
         }
 
         function loadHomePage() {
-            history = [];
-            currentIndex = -1;
             homeScreen.classList.remove('hidden');
             browserFrame.classList.add('hidden');
             browserFrame.src = 'about:blank';
             urlDisplay.textContent = '—';
-            loadingOverlay.classList.add('hidden');
+            loadingOverlay.classList.remove('active');
         }
 
-
-
         // Event listeners
-        searchBtn.addEventListener('click', (e) => {
-            e.preventDefault();
+        searchBtn.addEventListener('click', () => {
             const query = searchInput.value.trim();
-            console.log('Search clicked, query:', query);
             if (query) {
                 navigateTo(query);
             }
         });
 
-        searchInput.addEventListener('keypress', (e) => {
+        searchInput.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {
-                e.preventDefault();
                 const query = searchInput.value.trim();
-                console.log('Enter pressed, query:', query);
                 if (query) {
                     navigateTo(query);
                 }
@@ -356,16 +334,10 @@
         });
 
         // Double-click title to go home
-        document.querySelector('.title').addEventListener('dblclick', () => {
+        titleElement.addEventListener('dblclick', () => {
             searchInput.value = '';
             loadHomePage();
         });
-
-
-
-
-
-
 
         // ESC key to go home
         document.addEventListener('keydown', (e) => {
@@ -377,21 +349,16 @@
 
         // Hide loading overlay when iframe loads
         browserFrame.addEventListener('load', () => {
-            console.log('iframe loaded:', browserFrame.src);
+            console.log('Iframe loaded');
             setTimeout(() => {
-                loadingOverlay.classList.add('hidden');
-            }, 500);
-        });
-        
-        // Error handling
-        browserFrame.addEventListener('error', (e) => {
-            console.error('iframe error:', e);
-            loadingOverlay.classList.add('hidden');
-            alert('Failed to load: ' + urlDisplay.textContent + '\n\nSome sites block iframe embedding for security.');
+                loadingOverlay.classList.remove('active');
+            }, 300);
         });
 
         // Initialize
         loadHomePage();
+        
+        console.log('Cole Browser initialized');
     </script>
 </body>
 </html>
