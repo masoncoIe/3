@@ -27,17 +27,17 @@
 
         .header {
             background: #000;
-            padding: 15px;
-            border-bottom: 1px solid #222;
+            padding: 12px 20px;
+            border-bottom: 1px solid #1a1a1a;
         }
 
         .title {
             text-align: center;
-            font-size: 18px;
+            font-size: 16px;
             color: #fff;
-            font-weight: 500;
-            letter-spacing: 1px;
-            margin-bottom: 15px;
+            font-weight: 400;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
         }
 
         .search-container {
@@ -49,37 +49,40 @@
 
         .search-input {
             flex: 1;
-            padding: 10px 15px;
-            background: #111;
-            border: 1px solid #333;
-            border-radius: 4px;
+            padding: 10px 16px;
+            background: #0a0a0a;
+            border: 1px solid #1a1a1a;
+            border-radius: 6px;
             color: #fff;
             font-size: 14px;
             outline: none;
-            transition: border-color 0.2s;
+            transition: all 0.2s ease;
         }
 
         .search-input:focus {
-            border-color: #555;
+            border-color: #2a2a2a;
+            background: #0f0f0f;
         }
 
         .search-input::placeholder {
-            color: #555;
+            color: #4a4a4a;
         }
 
         .button {
             padding: 10px 20px;
-            background: #111;
-            border: 1px solid #333;
-            border-radius: 4px;
+            background: #0a0a0a;
+            border: 1px solid #1a1a1a;
+            border-radius: 6px;
             color: #fff;
-            font-size: 14px;
+            font-size: 13px;
             cursor: pointer;
-            transition: background 0.2s;
+            transition: all 0.2s ease;
+            font-weight: 400;
         }
 
         .button:hover {
-            background: #222;
+            background: #1a1a1a;
+            border-color: #2a2a2a;
         }
 
         .button:active {
@@ -88,49 +91,53 @@
 
         .nav-buttons {
             display: flex;
-            gap: 10px;
-            padding: 10px 15px;
+            gap: 8px;
+            padding: 8px 20px;
             background: #000;
-            border-bottom: 1px solid #222;
+            border-bottom: 1px solid #1a1a1a;
+            align-items: center;
         }
 
         .nav-btn {
             padding: 6px 12px;
-            background: #111;
-            border: 1px solid #333;
-            border-radius: 4px;
+            background: #0a0a0a;
+            border: 1px solid #1a1a1a;
+            border-radius: 6px;
             color: #fff;
             cursor: pointer;
-            transition: background 0.2s;
-            font-size: 13px;
+            transition: all 0.2s ease;
+            font-size: 12px;
         }
 
         .nav-btn:hover {
-            background: #222;
+            background: #1a1a1a;
+            border-color: #2a2a2a;
         }
 
         .quick-links {
             display: flex;
-            gap: 15px;
+            gap: 8px;
             flex-wrap: wrap;
             align-items: center;
+            margin-left: auto;
         }
 
         .quick-link {
             padding: 6px 12px;
-            background: #111;
-            border: 1px solid #333;
-            border-radius: 4px;
+            background: #0a0a0a;
+            border: 1px solid #1a1a1a;
+            border-radius: 6px;
             color: #fff;
             text-decoration: none;
-            font-size: 12px;
+            font-size: 11px;
             cursor: pointer;
-            transition: background 0.2s;
+            transition: all 0.2s ease;
             display: inline-block;
         }
 
         .quick-link:hover {
-            background: #222;
+            background: #1a1a1a;
+            border-color: #2a2a2a;
         }
 
         .iframe-container {
@@ -161,12 +168,12 @@
         }
 
         .loading-spinner {
-            width: 40px;
-            height: 40px;
-            border: 3px solid #222;
-            border-top: 3px solid #fff;
+            width: 32px;
+            height: 32px;
+            border: 2px solid #1a1a1a;
+            border-top: 2px solid #fff;
             border-radius: 50%;
-            animation: spin 1s linear infinite;
+            animation: spin 0.8s linear infinite;
         }
 
         @keyframes spin {
@@ -181,12 +188,12 @@
         .url-display {
             flex: 1;
             padding: 6px 12px;
-            background: #111;
-            border: 1px solid #333;
-            border-radius: 4px;
-            color: #666;
+            background: #0a0a0a;
+            border: 1px solid #1a1a1a;
+            border-radius: 6px;
+            color: #4a4a4a;
             font-size: 11px;
-            font-family: monospace;
+            font-family: 'SF Mono', Monaco, 'Courier New', monospace;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
@@ -250,11 +257,46 @@
 
         let history = [];
         let currentIndex = -1;
-        const HOME_URL = 'https://duckduckgo.com';
-        const USE_PROXY = true; // Set to true to use proxy for all sites
-
-        // Proxy configuration - using a CORS proxy
-        const PROXY_URL = 'https://api.allorigins.win/raw?url=';
+        
+        // Create a custom home page instead of loading external site
+        const HOME_HTML = `
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <style>
+                    body {
+                        margin: 0;
+                        padding: 0;
+                        background: #000;
+                        color: #fff;
+                        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        height: 100vh;
+                        flex-direction: column;
+                    }
+                    h1 {
+                        font-size: 48px;
+                        font-weight: 300;
+                        letter-spacing: 4px;
+                        margin-bottom: 20px;
+                    }
+                    p {
+                        font-size: 14px;
+                        color: #4a4a4a;
+                        letter-spacing: 1px;
+                    }
+                </style>
+            </head>
+            <body>
+                <h1>COLE</h1>
+                <p>Enter a search or URL above</p>
+            </body>
+            </html>
+        `;
+        
+        const USE_PROXY = false; // Disabled proxy - load sites directly
 
         function isValidUrl(string) {
             try {
@@ -266,10 +308,7 @@
         }
 
         function getProxyUrl(url) {
-            // Use proxy for all external sites to bypass CORS
-            if (USE_PROXY && !url.startsWith('about:')) {
-                return PROXY_URL + encodeURIComponent(url);
-            }
+            // Load sites directly without proxy
             return url;
         }
 
@@ -326,8 +365,17 @@
 
         homeBtn.addEventListener('click', () => {
             searchInput.value = '';
-            navigateTo(HOME_URL);
+            loadHomePage();
         });
+        
+        function loadHomePage() {
+            history = [];
+            currentIndex = -1;
+            browserFrame.srcdoc = HOME_HTML;
+            urlDisplay.textContent = 'home';
+            loadingOverlay.classList.add('hidden');
+            updateNavButtons();
+        }
 
         backBtn.addEventListener('click', () => {
             if (currentIndex > 0) {
@@ -383,9 +431,8 @@
             }
         });
 
-        // Initialize with DuckDuckGo home
-        navigateTo(HOME_URL);
-        updateNavButtons();
+        // Initialize with custom home page
+        loadHomePage();
     </script>
 </body>
 </html>
