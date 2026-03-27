@@ -1,0 +1,22 @@
+{
+  "name": "cole-browser",
+  "version": "1.0.0",
+  "description": "A minimalist black-themed proxy browser powered by Ultraviolet",
+  "main": "index.html",
+  "scripts": {
+    "start": "python3 server.py",
+    "dev": "python3 server.py"
+  },
+  "keywords": [
+    "proxy",
+    "browser",
+    "ultraviolet",
+    "web-proxy"
+  ],
+  "dependencies": {
+    "@titaniumnetwork-dev/ultraviolet": "^2.0.0",
+    "@mercuryworkshop/scramjet": "^1.0.0",
+    "@mercuryworkshop/epoxy-transport": "^2.0.0",
+    "@mercuryworkshop/wisp-server-python": "^1.0.0"
+  }
+}
