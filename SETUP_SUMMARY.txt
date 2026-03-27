@@ -1,0 +1,103 @@
+═══════════════════════════════════════════════════════════
+                    COLE BROWSER
+           Minimalist Black Theme Proxy Browser
+═══════════════════════════════════════════════════════════
+
+📦 WHAT'S INCLUDED:
+
+✅ index.html          - Main browser with Ultraviolet proxy
+✅ standalone.html     - No-setup version (open directly)
+✅ browser.html        - Simple version (no proxy)
+✅ server.py           - Python web server with CORS
+✅ sw.js               - Service worker for proxy routing
+✅ uv/uv.config.js     - Ultraviolet configuration
+✅ setup.sh            - Automated setup script
+✅ package.json        - Node.js dependencies
+✅ README.md           - Full documentation
+✅ QUICKSTART.md       - Quick start guide
+
+═══════════════════════════════════════════════════════════
+
+🚀 QUICK START (3 OPTIONS):
+
+OPTION 1: INSTANT (No Setup)
+   → Just open standalone.html in browser
+   ⚠️  Limited - some sites may not work
+
+OPTION 2: FULL POWER (Recommended)
+   1. Run: ./setup.sh
+   2. Run: python3 server.py
+   3. Open: http://localhost:8080
+   ✅ Full Ultraviolet proxy support
+
+OPTION 3: SIMPLE
+   → Open browser.html
+   ⚠️  No proxy support
+
+═══════════════════════════════════════════════════════════
+
+🎨 FEATURES:
+
+• Pure black minimalist design (#000, #0a0a0a, #1a1a1a)
+• Clean "COLE" branding
+• Ultraviolet proxy integration
+• No new tabs - everything in iframe
+• Quick links (TikTok, YouTube, Instagram, etc.)
+• Navigation controls (back, forward, refresh)
+• Custom clean home page
+• Service worker powered
+
+═══════════════════════════════════════════════════════════
+
+🔧 PROXY TECHNOLOGIES:
+
+Based on the same tech as "fern":
+
+✓ Ultraviolet      - Titanium Network's sophisticated proxy
+✓ Scramjet         - Mercury Workshop's proxy framework
+✓ EpoxyTransport   - Flexible network transport
+✓ WISP Protocol    - Advanced WebSocket implementation
+
+═══════════════════════════════════════════════════════════
+
+📋 TO GET STARTED:
+
+1. Read QUICKSTART.md for detailed instructions
+2. Choose your setup option above
+3. For TikTok/YouTube, use Option 2 (full proxy)
+
+═══════════════════════════════════════════════════════════
+
+⚠️  IMPORTANT NOTES:
+
+• Service workers need localhost or HTTPS
+• Some sites may block iframes (security)
+• For best results, use full proxy setup
+• TikTok works with Ultraviolet proxy
+
+═══════════════════════════════════════════════════════════
+
+🐛 TROUBLESHOOTING:
+
+Problem: "Sites won't load"
+Fix: Use index.html with server.py running
+
+Problem: "allorigins.win error"  
+Fix: Use index.html instead of browser.html
+
+Problem: "Service worker error"
+Fix: Use localhost or clear cache
+
+═══════════════════════════════════════════════════════════
+
+📖 MORE INFO:
+
+→ README.md       - Full documentation
+→ QUICKSTART.md   - Step-by-step guide
+→ package.json    - View dependencies
+
+═══════════════════════════════════════════════════════════
+
+               COLE - Clean. Simple. Unblocked.
+
+═══════════════════════════════════════════════════════════
