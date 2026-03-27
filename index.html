@@ -11,8 +11,10 @@
             box-sizing: border-box;
         }
 
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:wght@300;400&display=swap');
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            font-family: 'Cormorant Garamond', 'Georgia', serif;
             background: #000;
             color: #fff;
             overflow: hidden;
@@ -26,124 +28,111 @@
         }
 
         .header {
-            background: #000;
-            padding: 12px 20px;
+            background: linear-gradient(180deg, #000 0%, #0a0a0a 100%);
+            padding: 20px 30px;
             border-bottom: 1px solid #1a1a1a;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.8);
         }
 
         .title {
             text-align: center;
-            font-size: 16px;
+            font-size: 32px;
             color: #fff;
-            font-weight: 400;
-            letter-spacing: 2px;
-            margin-bottom: 12px;
+            font-weight: 600;
+            letter-spacing: 8px;
+            margin-bottom: 20px;
+            font-family: 'Cinzel', serif;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
         }
 
         .search-container {
             display: flex;
-            gap: 10px;
-            max-width: 1200px;
+            gap: 0;
+            max-width: 800px;
             margin: 0 auto;
         }
 
         .search-input {
             flex: 1;
-            padding: 10px 16px;
-            background: #0a0a0a;
-            border: 1px solid #1a1a1a;
-            border-radius: 6px;
+            padding: 14px 24px;
+            background: #000;
+            border: 1px solid #2a2a2a;
+            border-right: none;
             color: #fff;
-            font-size: 14px;
+            font-size: 15px;
             outline: none;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
+            font-family: 'Cormorant Garamond', serif;
+            letter-spacing: 0.5px;
         }
 
         .search-input:focus {
-            border-color: #2a2a2a;
-            background: #0f0f0f;
+            border-color: #3a3a3a;
+            background: #050505;
+            box-shadow: inset 0 1px 10px rgba(0, 0, 0, 0.5);
         }
 
         .search-input::placeholder {
-            color: #4a4a4a;
+            color: #3a3a3a;
+            font-style: italic;
         }
 
         .button {
-            padding: 10px 20px;
-            background: #0a0a0a;
-            border: 1px solid #1a1a1a;
-            border-radius: 6px;
+            padding: 14px 32px;
+            background: #000;
+            border: 1px solid #2a2a2a;
             color: #fff;
             font-size: 13px;
             cursor: pointer;
-            transition: all 0.2s ease;
-            font-weight: 400;
+            transition: all 0.3s ease;
+            font-family: 'Cinzel', serif;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 500;
         }
 
         .button:hover {
-            background: #1a1a1a;
-            border-color: #2a2a2a;
+            background: #0a0a0a;
+            border-color: #3a3a3a;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
         }
 
         .button:active {
-            background: #333;
+            background: #1a1a1a;
         }
 
-        .nav-buttons {
+        .nav-bar {
             display: flex;
-            gap: 8px;
-            padding: 8px 20px;
+            justify-content: center;
+            padding: 12px 30px;
             background: #000;
             border-bottom: 1px solid #1a1a1a;
-            align-items: center;
         }
 
-        .nav-btn {
-            padding: 6px 12px;
-            background: #0a0a0a;
+        .url-display {
+            max-width: 800px;
+            padding: 8px 24px;
+            background: transparent;
             border: 1px solid #1a1a1a;
-            border-radius: 6px;
-            color: #fff;
-            cursor: pointer;
-            transition: all 0.2s ease;
+            color: #3a3a3a;
             font-size: 12px;
+            font-family: 'Cormorant Garamond', serif;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            text-align: center;
+            letter-spacing: 1px;
         }
 
-        .nav-btn:hover {
-            background: #1a1a1a;
-            border-color: #2a2a2a;
-        }
 
-        .nav-btn:disabled {
-            opacity: 0.3;
-            cursor: not-allowed;
-        }
 
-        .quick-links {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            align-items: center;
-            margin-left: auto;
-        }
 
-        .quick-link {
-            padding: 6px 12px;
-            background: #0a0a0a;
-            border: 1px solid #1a1a1a;
-            border-radius: 6px;
-            color: #fff;
-            text-decoration: none;
-            font-size: 11px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: inline-block;
-        }
 
-        .quick-link:hover {
-            background: #1a1a1a;
-            border-color: #2a2a2a;
-        }
+
+
+
+
+
 
         .iframe-container {
             flex: 1;
@@ -173,12 +162,12 @@
         }
 
         .loading-spinner {
-            width: 32px;
-            height: 32px;
+            width: 40px;
+            height: 40px;
             border: 2px solid #1a1a1a;
             border-top: 2px solid #fff;
             border-radius: 50%;
-            animation: spin 0.8s linear infinite;
+            animation: spin 1s linear infinite;
         }
 
         @keyframes spin {
@@ -190,19 +179,7 @@
             display: none;
         }
 
-        .url-display {
-            flex: 1;
-            padding: 6px 12px;
-            background: #0a0a0a;
-            border: 1px solid #1a1a1a;
-            border-radius: 6px;
-            color: #4a4a4a;
-            font-size: 11px;
-            font-family: 'SF Mono', Monaco, 'Courier New', monospace;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
+
 
         .home-screen {
             display: flex;
@@ -214,46 +191,38 @@
         }
 
         .home-screen h1 {
-            font-size: 48px;
-            font-weight: 300;
-            letter-spacing: 4px;
-            margin-bottom: 20px;
+            font-size: 96px;
+            font-weight: 600;
+            letter-spacing: 16px;
+            margin-bottom: 30px;
+            font-family: 'Cinzel', serif;
+            text-shadow: 0 0 50px rgba(255, 255, 255, 0.1);
         }
 
         .home-screen p {
-            font-size: 14px;
-            color: #4a4a4a;
-            letter-spacing: 1px;
+            font-size: 16px;
+            color: #3a3a3a;
+            letter-spacing: 3px;
+            font-style: italic;
         }
     </style>
 </head>
 <body>
     <div class="browser-container">
         <div class="header">
-            <div class="title">COLE</div>
+            <div class="title">C O L E</div>
             <div class="search-container">
                 <input type="text" 
                        class="search-input" 
                        id="searchInput" 
-                       placeholder="Search or enter URL"
+                       placeholder="Enter destination..."
                        autocomplete="off">
-                <button class="button" id="searchBtn">Go</button>
-                <button class="button" id="homeBtn">Home</button>
+                <button class="button" id="searchBtn">Enter</button>
             </div>
         </div>
 
-        <div class="nav-buttons">
-            <button class="nav-btn" id="backBtn">← Back</button>
-            <button class="nav-btn" id="forwardBtn">Forward →</button>
-            <button class="nav-btn" id="refreshBtn">↻ Refresh</button>
-            <div class="url-display" id="urlDisplay">home</div>
-            <div class="quick-links">
-                <a class="quick-link" data-url="https://www.tiktok.com">TikTok</a>
-                <a class="quick-link" data-url="https://www.youtube.com">YouTube</a>
-                <a class="quick-link" data-url="https://www.instagram.com">Instagram</a>
-                <a class="quick-link" data-url="https://www.twitter.com">Twitter</a>
-                <a class="quick-link" data-url="https://www.reddit.com">Reddit</a>
-            </div>
+        <div class="nav-bar">
+            <div class="url-display" id="urlDisplay">—</div>
         </div>
 
         <div class="iframe-container">
@@ -261,30 +230,26 @@
                 <div class="loading-spinner"></div>
             </div>
             <div class="home-screen" id="homeScreen">
-                <h1>COLE</h1>
-                <p>Enter a search or URL above</p>
+                <h1>C O L E</h1>
+                <p>A Gateway to the Web</p>
             </div>
             <iframe class="browser-frame hidden" 
                     id="browserFrame"
+                    sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-modals allow-popups-to-escape-sandbox"
                     src="about:blank">
             </iframe>
         </div>
     </div>
 
-    <script src="uv/uv.bundle.js"></script>
-    <script src="uv/uv.config.js"></script>
     <script>
+        // Inline minimal proxy handler
+        const USE_DIRECT = true; // Load sites directly
         const searchInput = document.getElementById('searchInput');
         const searchBtn = document.getElementById('searchBtn');
-        const homeBtn = document.getElementById('homeBtn');
-        const backBtn = document.getElementById('backBtn');
-        const forwardBtn = document.getElementById('forwardBtn');
-        const refreshBtn = document.getElementById('refreshBtn');
         const browserFrame = document.getElementById('browserFrame');
         const homeScreen = document.getElementById('homeScreen');
         const urlDisplay = document.getElementById('urlDisplay');
         const loadingOverlay = document.getElementById('loadingOverlay');
-        const quickLinks = document.querySelectorAll('.quick-link');
 
         let history = [];
         let currentIndex = -1;
@@ -327,19 +292,16 @@
             homeScreen.classList.add('hidden');
             browserFrame.classList.remove('hidden');
 
-            // Use Ultraviolet proxy if available
-            let proxyUrl = targetUrl;
-            if (window.__uv$config) {
-                try {
-                    proxyUrl = __uv$config.prefix + __uv$config.encodeUrl(targetUrl);
-                } catch (e) {
-                    console.log('UV encoding failed, using direct URL');
-                }
+            // Load URL directly
+            browserFrame.src = targetUrl;
+            
+            // Update URL display with cleaner format
+            try {
+                const urlObj = new URL(targetUrl);
+                urlDisplay.textContent = urlObj.hostname.replace('www.', '');
+            } catch (e) {
+                urlDisplay.textContent = targetUrl;
             }
-
-            browserFrame.src = proxyUrl;
-            urlDisplay.textContent = targetUrl;
-            updateNavButtons();
         }
 
         function loadHomePage() {
@@ -348,15 +310,11 @@
             homeScreen.classList.remove('hidden');
             browserFrame.classList.add('hidden');
             browserFrame.src = 'about:blank';
-            urlDisplay.textContent = 'home';
+            urlDisplay.textContent = '—';
             loadingOverlay.classList.add('hidden');
-            updateNavButtons();
         }
 
-        function updateNavButtons() {
-            backBtn.disabled = currentIndex <= 0;
-            forwardBtn.disabled = currentIndex >= history.length - 1;
-        }
+
 
         // Event listeners
         searchBtn.addEventListener('click', () => {
@@ -375,48 +333,24 @@
             }
         });
 
-        homeBtn.addEventListener('click', () => {
+        // Double-click title to go home
+        document.querySelector('.title').addEventListener('dblclick', () => {
             searchInput.value = '';
             loadHomePage();
         });
 
-        backBtn.addEventListener('click', () => {
-            if (currentIndex > 0) {
-                currentIndex--;
-                const url = history[currentIndex];
-                browserFrame.src = url;
-                urlDisplay.textContent = url;
-                updateNavButtons();
-            }
-        });
 
-        forwardBtn.addEventListener('click', () => {
-            if (currentIndex < history.length - 1) {
-                currentIndex++;
-                const url = history[currentIndex];
-                browserFrame.src = url;
-                urlDisplay.textContent = url;
-                updateNavButtons();
-            }
-        });
 
-        refreshBtn.addEventListener('click', () => {
-            if (!homeScreen.classList.contains('hidden')) {
+
+
+
+
+        // ESC key to go home
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                searchInput.value = '';
                 loadHomePage();
-            } else {
-                loadingOverlay.classList.remove('hidden');
-                browserFrame.src = browserFrame.src;
             }
-        });
-
-        // Quick links
-        quickLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const url = link.getAttribute('data-url');
-                searchInput.value = url;
-                navigateTo(url);
-            });
         });
 
         // Hide loading overlay when iframe loads
