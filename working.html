@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cole</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:wght@300;400&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', 'Georgia', serif;
+            background: #000 url('background.avif') center/cover no-repeat fixed;
+            color: #fff;
+            overflow: hidden;
+            height: 100vh;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.75);
+            z-index: -1;
+        }
+
+        .browser-container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        .header {
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 20px 30px;
+            border-bottom: 1px solid #2a2a2a;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.8);
+        }
+
+        .title {
+            text-align: center;
+            font-size: 32px;
+            color: #fff;
+            font-weight: 600;
+            letter-spacing: 8px;
+            margin-bottom: 20px;
+            font-family: 'Cinzel', serif;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+            cursor: default;
+            user-select: none;
+        }
+
+        .search-container {
+            display: flex;
+            gap: 0;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 14px 24px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid #2a2a2a;
+            border-right: none;
+            color: #fff;
+            font-size: 15px;
+            outline: none;
+            transition: all 0.3s ease;
+            font-family: 'Cormorant Garamond', serif;
+            letter-spacing: 0.5px;
+        }
+
+        .search-input:focus {
+            border-color: #3a3a3a;
+            background: rgba(5, 5, 5, 0.9);
+            box-shadow: inset 0 1px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .search-input::placeholder {
+            color: #4a4a4a;
+            font-style: italic;
+        }
+
+        .button {
+            padding: 14px 32px;
+            background: rgba(0, 0, 0, 0.9);
+            border: 1px solid #2a2a2a;
+            color: #fff;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Cinzel', serif;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        .button:hover {
+            background: rgba(10, 10, 10, 0.95);
+            border-color: #3a3a3a;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
+        }
+
+        .button:active {
+            background: rgba(26, 26, 26, 0.95);
+        }
+
+        .nav-bar {
+            display: flex;
+            justify-content: center;
+            padding: 12px 30px;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #1a1a1a;
+        }
+
+        .url-display {
+            max-width: 800px;
+            padding: 8px 24px;
+            background: transparent;
+            border: 1px solid #1a1a1a;
+            color: #4a4a4a;
+            font-size: 12px;
+            font-family: 'Cormorant Garamond', serif;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+
+        .iframe-container {
+            flex: 1;
+            background: #000;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .browser-frame {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: #000;
+        }
+
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .loading-overlay.hidden {
+            display: none;
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 2px solid #1a1a1a;
+            border-top: 2px solid #fff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        .loading-text {
+            color: #4a4a4a;
+            font-size: 14px;
+            font-family: 'Cinzel', serif;
+            letter-spacing: 2px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .home-screen {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            flex-direction: column;
+            background: transparent;
+        }
+
+        .home-screen.hidden {
+            display: none;
+        }
+
+        .home-screen h1 {
+            font-size: 96px;
+            font-weight: 600;
+            letter-spacing: 16px;
+            margin-bottom: 30px;
+            font-family: 'Cinzel', serif;
+            text-shadow: 0 0 50px rgba(255, 255, 255, 0.15);
+        }
+
+        .home-screen p {
+            font-size: 16px;
+            color: #4a4a4a;
+            letter-spacing: 3px;
+            font-style: italic;
+        }
+
+        .browser-frame.hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="browser-container">
+        <div class="header">
+            <div class="title" id="titleElement">C O L E</div>
+            <div class="search-container">
+                <input type="text" 
+                       class="search-input" 
+                       id="searchInput" 
+                       placeholder="Enter destination..."
+                       autocomplete="off">
+                <button class="button" id="searchBtn">Enter</button>
+            </div>
+        </div>
+
+        <div class="nav-bar">
+            <div class="url-display" id="urlDisplay">—</div>
+        </div>
+
+        <div class="iframe-container">
+            <div class="loading-overlay" id="loadingOverlay">
+                <div class="loading-spinner"></div>
+                <div class="loading-text">Loading...</div>
+            </div>
+            <div class="home-screen" id="homeScreen">
+                <h1>C O L E</h1>
+                <p>A Gateway to the Web</p>
+            </div>
+            <iframe class="browser-frame" 
+                    id="browserFrame"
+                    sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-modals allow-top-navigation allow-popups-to-escape-sandbox"
+                    allowfullscreen>
+            </iframe>
+        </div>
+    </div>
+
+    <script>
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+        const browserFrame = document.getElementById('browserFrame');
+        const homeScreen = document.getElementById('homeScreen');
+        const urlDisplay = document.getElementById('urlDisplay');
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        const titleElement = document.getElementById('titleElement');
+
+        // Register service worker for Ultraviolet proxy
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js', {
+                scope: '/service/'
+            }).then((registration) => {
+                console.log('Service Worker registered:', registration);
+            }).catch((error) => {
+                console.error('Service Worker registration failed:', error);
+            });
+        }
+
+        function isValidUrl(string) {
+            try {
+                const url = new URL(string);
+                return url.protocol === 'http:' || url.protocol === 'https:';
+            } catch (_) {
+                return false;
+            }
+        }
+
+        function formatUrl(input) {
+            input = input.trim();
+            
+            if (isValidUrl(input)) {
+                return input;
+            }
+            
+            // Check if it looks like a domain
+            if (input.includes('.') && !input.includes(' ')) {
+                return 'https://' + input;
+            }
+            
+            // Otherwise treat as search query
+            return 'https://duckduckgo.com/?q=' + encodeURIComponent(input);
+        }
+
+        function navigateTo(url) {
+            const targetUrl = formatUrl(url);
+            console.log('Navigating to:', targetUrl);
+            
+            // Show loading and hide home screen
+            loadingOverlay.classList.remove('hidden');
+            homeScreen.classList.add('hidden');
+            browserFrame.classList.remove('hidden');
+            
+            // Update URL display
+            try {
+                const urlObj = new URL(targetUrl);
+                urlDisplay.textContent = urlObj.hostname.replace('www.', '');
+            } catch (e) {
+                urlDisplay.textContent = targetUrl;
+            }
+
+            // Try using proxy service
+            let proxyUrl = targetUrl;
+            
+            // Check if service worker is ready
+            if (navigator.serviceWorker.controller) {
+                // Use Ultraviolet proxy
+                const encoded = encodeURIComponent(targetUrl);
+                proxyUrl = '/service/' + btoa(targetUrl);
+                console.log('Using proxy URL:', proxyUrl);
+            } else {
+                console.log('Service worker not ready, loading directly');
+            }
+
+            // Load URL in iframe
+            browserFrame.src = proxyUrl;
+        }
+
+        function loadHomePage() {
+            homeScreen.classList.remove('hidden');
+            browserFrame.classList.add('hidden');
+            browserFrame.src = 'about:blank';
+            urlDisplay.textContent = '—';
+            loadingOverlay.classList.add('hidden');
+        }
+
+        // Event listeners
+        searchBtn.addEventListener('click', () => {
+            const query = searchInput.value.trim();
+            if (query) {
+                navigateTo(query);
+            }
+        });
+
+        searchInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                const query = searchInput.value.trim();
+                if (query) {
+                    navigateTo(query);
+                }
+            }
+        });
+
+        // Double-click title to go home
+        titleElement.addEventListener('dblclick', () => {
+            searchInput.value = '';
+            loadHomePage();
+        });
+
+        // ESC key to go home
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                searchInput.value = '';
+                loadHomePage();
+            }
+        });
+
+        // Hide loading overlay when iframe loads
+        browserFrame.addEventListener('load', () => {
+            console.log('Iframe loaded:', browserFrame.src);
+            setTimeout(() => {
+                loadingOverlay.classList.add('hidden');
+            }, 500);
+        });
+
+        // Error handling
+        browserFrame.addEventListener('error', (e) => {
+            console.error('Iframe error:', e);
+            loadingOverlay.classList.add('hidden');
+        });
+
+        // Initialize
+        loadHomePage();
+        
+        console.log('Cole Browser initialized');
+        console.log('Service Worker support:', 'serviceWorker' in navigator);
+    </script>
+</body>
+</html>
