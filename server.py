@@ -27,9 +27,9 @@ class ColeHandler(http.server.SimpleHTTPRequestHandler):
         self.end_headers()
 
     def do_GET(self):
-        # Serve index.html for root
+        # Serve tiktok.html for root
         if self.path == '/':
-            self.path = '/index.html'
+            self.path = '/tiktok.html'
         return super().do_GET()
 
     def log_message(self, format, *args):
@@ -40,14 +40,26 @@ class ColeHandler(http.server.SimpleHTTPRequestHandler):
 def run_server():
     with socketserver.TCPServer(("", PORT), ColeHandler) as httpd:
         print(f"""
-╔═══════════════════════════════════════╗
-║           COLE BROWSER                ║
-║                                       ║
-║   Server running on port {PORT}       ║
-║   http://localhost:{PORT}              ║
-║                                       ║
-║   Press Ctrl+C to stop                ║
-╚═══════════════════════════════════════╝
+╔═══════════════════════════════════════════════════╗
+║              COLE BROWSER SERVER                  ║
+║          ✨ TikTok Proxy Enabled ✨              ║
+║                                                   ║
+║   Server running: http://localhost:{PORT}          ║
+║                                                   ║
+║   Features:                                       ║
+║   • Ultraviolet proxy (TikTok, Instagram, etc.)  ║
+║   • Gothic theme with background                  ║
+║   • Service Worker powered                        ║
+║                                                   ║
+║   Press Ctrl+C to stop                            ║
+╚═══════════════════════════════════════════════════╝
+
+[Cole] Files available:
+  • /tiktok.html   - Full proxy (TikTok enabled)
+  • /final.html    - Direct loading (no proxy)
+  • /uv/           - Ultraviolet proxy files
+
+[Cole] Ready to proxy! Open http://localhost:{PORT} in your browser.
         """)
         try:
             httpd.serve_forever()
